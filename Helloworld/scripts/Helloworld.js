@@ -1,9 +1,9 @@
 define("DS/Helloworld/scripts/Helloworld",[], function(){
     var myWidget={
-        onLoadWidget: function(){
+        onLoad: function(){
             widget.body.innerHTML="<div class='main-container'><p>hello, world Harshi!</p></div>";
 
         },
     };
-    return myWidget;
+ widget.addEvent('onLoad',myWidget.onLoad);
     });
