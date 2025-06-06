@@ -5,6 +5,6 @@ define("DS/Helloworld/scripts/Helloworld",[], function(){
 
         },
     };
-    return myWidget;
- //widget.addEvent('onLoad',myWidget.onLoad);
+   
+ widget.addEvent('onLoad',myWidget.onLoad);
     });
