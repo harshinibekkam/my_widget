@@ -6,7 +6,7 @@
             var name = widget.getValue("Name") || "";
             var revision = widget.getValue("Revision") || "";
 
-            // Inject HTML with clean structure and styling
+            // Inject two "pages": one for form, one for submitted values
             widget.body.innerHTML = `
                 <style>
                     .main-container {
@@ -53,65 +53,88 @@
                         background-color: #f44336;
                         color: white;
                     }
-                    #resultDisplay {
-                        margin-top: 20px;
-                        padding: 10px;
-                        background-color: #e7f3fe;
-                        border-left: 5px solid #2196F3;
+                    #backBtn {
+                        background-color: #2196F3;
+                        color: white;
+                    }
+                    .page {
+                        display: none;
+                    }
+                    .active {
+                        display: block;
                     }
                 </style>
 
                 <div class='main-container'>
-                    <form id='dynamicForm'>
-                        <div class='form-group'>
-                            <label for='typeInput'>Type</label>
-                            <input type='text' id='typeInput' name='type' value='${type}' />
-                        </div>
-                        <div class='form-group'>
-                            <label for='nameInput'>Name</label>
-                            <input type='text' id='nameInput' name='name' value='${name}' />
-                        </div>
-                        <div class='form-group'>
-                            <label for='revisionInput'>Revision</label>
-                            <input type='text' id='revisionInput' name='revision' value='${revision}' />
-                        </div>
+                    <!-- Page 1: Form -->
+                    <div id='formPage' class='page active'>
+                        <form id='dynamicForm'>
+                            <div class='form-group'>
+                                <label for='typeInput'>Type</label>
+                                <input type='text' id='typeInput' name='type' value='${type}' />
+                            </div>
+                            <div class='form-group'>
+                                <label for='nameInput'>Name</label>
+                                <input type='text' id='nameInput' name='name' value='${name}' />
+                            </div>
+                            <div class='form-group'>
+                                <label for='revisionInput'>Revision</label>
+                                <input type='text' id='revisionInput' name='revision' value='${revision}' />
+                            </div>
 
+                            <div class='button-group'>
+                                <button type='button' id='cancelBtn'>Cancel</button>
+                                <button type='submit' id='doneBtn'>Done</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Page 2: Confirmation -->
+                    <div id='resultPage' class='page'>
+                        <h3>Submitted Values</h3>
+                        <p><strong>Type:</strong> <span id='displayType'></span></p>
+                        <p><strong>Name:</strong> <span id='displayName'></span></p>
+                        <p><strong>Revision:</strong> <span id='displayRevision'></span></p>
                         <div class='button-group'>
-                            <button type='button' id='cancelBtn'>Cancel</button>
-                            <button type='submit' id='doneBtn'>Done</button>
+                            <button id='backBtn'>Back</button>
                         </div>
-                    </form>
-
-                    <div id='resultDisplay'></div>
+                    </div>
                 </div>
             `;
 
-            // Done button (submit)
+            // Handle form submit
             document.getElementById("dynamicForm").addEventListener("submit", function(event) {
                 event.preventDefault();
 
-                var newType = document.getElementById("typeInput").value.trim();
-                var newName = document.getElementById("nameInput").value.trim();
-                var newRevision = document.getElementById("revisionInput").value.trim();
+                // Get form values
+                const newType = document.getElementById("typeInput").value.trim();
+                const newName = document.getElementById("nameInput").value.trim();
+                const newRevision = document.getElementById("revisionInput").value.trim();
 
-                document.getElementById("resultDisplay").innerHTML = `
-                    <strong>Submitted Values:</strong>
-                    <p>Type: ${newType}</p>
-                    <p>Name: ${newName}</p>
-                    <p>Revision: ${newRevision}</p>
-                `;
+                // Display values on next page
+                document.getElementById("displayType").textContent = newType;
+                document.getElementById("displayName").textContent = newName;
+                document.getElementById("displayRevision").textContent = newRevision;
+
+                // Navigate to result page
+                document.getElementById("formPage").classList.remove("active");
+                document.getElementById("resultPage").classList.add("active");
             });
 
-            // Cancel button
+            // Cancel button resets to original values
             document.getElementById("cancelBtn").addEventListener("click", function() {
-                // Reset to original values
                 document.getElementById("typeInput").value = type;
                 document.getElementById("nameInput").value = name;
                 document.getElementById("revisionInput").value = revision;
-
-                document.getElementById("resultDisplay").innerHTML = `<p><em>Changes canceled.</em></p>`;
+                alert("Changes canceled");
             });
-        },
+
+            // Back button to go from result page to form
+            document.getElementById("backBtn").addEventListener("click", function() {
+                document.getElementById("resultPage").classList.remove("active");
+                document.getElementById("formPage").classList.add("active");
+            });
+        }
     };
 
     widget.addEvent('onLoad', myWidget.onLoad);
