@@ -1,7 +1,7 @@
  define("DS/Helloworld/scripts/Helloworld",[], function(){
     var myWidget={
         onLoad: function(){
-        var value=widget.setvalue("Type","Pen-type");    
+        widget.setValue("Type","Pen-type");    
         var type = widget.getValue("Type");
         alert("type::"+type);
          var type = widget.getValue("Name");
