@@ -1,45 +1,55 @@
- define("DS/Helloworld/scripts/Helloworld", [], function(){
+define("DS/Helloworld/scripts/Helloworld", [], function(){
     var myWidget = {
-        onLoad: function(){
-            // Get values from widget preferences
-            var type = widget.getValue("Type");
-            var name = widget.getValue("Name");
-            var revision = widget.getValue("Revision");
+        onLoad: function() {
+            // Get initial values from widget preferences
+            var type = widget.getValue("Type") || "";
+            var name = widget.getValue("Name") || "";
+            var revision = widget.getValue("Revision") || "";
 
-            // Build HTML content with a form
+            // Display a dynamic form with current values
             widget.body.innerHTML = 
                 "<div class='main-container'>" +
-                    "<p><strong>Type:</strong> " + type + "</p>" +
-                    "<p><strong>Name:</strong> " + name + "</p>" +
-                    "<p><strong>Revision:</strong> " + revision + "</p>" +
-                    "<hr/>" +
-                    "<form id='myForm'>" +
-                        "<label for='input1'>Enter some text:</label><br>" +
-                        "<input type='text' id='input1' name='input1' placeholder='Type here...' /><br><br>" +
+                    "<form id='dynamicForm'>" +
 
-                        "<label for='select1'>Choose an option:</label><br>" +
-                        "<select id='select1' name='select1'>" +
-                            "<option value='option1'>Option 1</option>" +
-                            "<option value='option2'>Option 2</option>" +
-                        "</select><br><br>" +
+                        "<label for='typeInput'><strong>Type:</strong></label><br>" +
+                        "<input type='text' id='typeInput' name='type' value='" + type + "' /><br><br>" +
 
-                        "<input type='submit' value='Submit' />" +
+                        "<label for='nameInput'><strong>Name:</strong></label><br>" +
+                        "<input type='text' id='nameInput' name='name' value='" + name + "' /><br><br>" +
+
+                        "<label for='revisionInput'><strong>Revision:</strong></label><br>" +
+                        "<input type='text' id='revisionInput' name='revision' value='" + revision + "' /><br><br>" +
+
+                        "<button type='submit' id='doneBtn'>Done</button> " +
+                        "<button type='button' id='cancelBtn'>Cancel</button>" +
+
                     "</form>" +
 
-                    "<div id='formResult' style='margin-top: 10px;'></div>" +
+                    "<div id='resultDisplay' style='margin-top:15px;'></div>" +
                 "</div>";
 
-            // Handle form submission
-            document.getElementById("myForm").addEventListener("submit", function(event) {
-                event.preventDefault(); // Prevent page reload
+            // Handle Done (form submission)
+            document.getElementById("dynamicForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent reload
 
-                var inputText = document.getElementById("input1").value;
-                var selectedOption = document.getElementById("select1").value;
+                var newType = document.getElementById("typeInput").value;
+                var newName = document.getElementById("nameInput").value;
+                var newRevision = document.getElementById("revisionInput").value;
 
-                // Display the result
-                document.getElementById("formResult").innerHTML = 
-                    "<p><strong>You entered:</strong> " + inputText + "</p>" +
-                    "<p><strong>You selected:</strong> " + selectedOption + "</p>";
+                // Display updated values
+                document.getElementById("resultDisplay").innerHTML = 
+                    "<p><strong>Updated Type:</strong> " + newType + "</p>" +
+                    "<p><strong>Updated Name:</strong> " + newName + "</p>" +
+                    "<p><strong>Updated Revision:</strong> " + newRevision + "</p>";
+            });
+
+            // Handle Cancel (reset form to original values)
+            document.getElementById("cancelBtn").addEventListener("click", function() {
+                document.getElementById("typeInput").value = type;
+                document.getElementById("nameInput").value = name;
+                document.getElementById("revisionInput").value = revision;
+
+                document.getElementById("resultDisplay").innerHTML = "<p><em>Changes canceled.</em></p>";
             });
         },
     };
