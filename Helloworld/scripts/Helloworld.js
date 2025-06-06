@@ -6,10 +6,10 @@
             var name = widget.getValue("Name");
             var revision = widget.getValue("Revision");
 
-            // Optional: alert for debugging
+            /* Optional: alert for debugging
             alert("Type: " + type);
             alert("Name: " + name);
-            alert("Revision: " + revision);
+            alert("Revision: " + revision);*/
 
             // Display values in the widget body
             widget.body.innerHTML = `
