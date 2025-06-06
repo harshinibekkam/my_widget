@@ -6,7 +6,12 @@
     <title>Hello world widget</title>
     
     <link rel="stylesheet" type="text/css" href="style/HelloWorld.css" />
- 
+  <widget:preferences>
+    <widget:preference name="OperationChoice" type="list" label="Operation" defaultValue="NFirst" >
+        <widget:option label="NFirst" value="NFirst"></widget:option>
+        <widget:option label="Abs" value="Abs"></widget:option>
+    </widget:preference>
+</widget:preferences>
     <script>
        require(["DS/Helloworld/scripts/Helloworld"],function(myWidget){
                 widget.addEvent("onLoad",myWidget.onLoadWidget);
