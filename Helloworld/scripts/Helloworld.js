@@ -1,4 +1,4 @@
-  define("DS/Helloworld/scripts/Helloworld", [], function(){
+ define("DS/Helloworld/scripts/Helloworld", [], function(){
     var myWidget = {
         onLoad: function(){
             // Get values from widget preferences
@@ -12,13 +12,12 @@
             alert("Revision: " + revision);*/
 
             // Display values in the widget body
-            widget.body.innerHTML = `
-                <div class='main-container'>
-                    <p><strong>Type:</strong> Pen_type</p>
-                    <p><strong>Name:</strong>Pen</p>
-                    <p><strong>Revision:</strong>A.1</p>
-                </div>
-            `;
+            widget.body.innerHTML = 
+                "<div class='main-container'>" +
+                    "<p><strong>Type:</strong> " + type + "</p>" +
+                    "<p><strong>Name:</strong> " + name + "</p>" +
+                    "<p><strong>Revision:</strong> " + revision + "</p>" +
+                "</div>";
         },
     };
 
